@@ -29,7 +29,7 @@ pipeline {
                 echo "Deploying to: ${params.ENVIRONMENT}"
                 script {
                     if (params.RUN_TESTS) {
-                        echo "Running tests..."
+                        echo "Running tests"
                     } else {
                         echo "Skipping tests"
                     }
