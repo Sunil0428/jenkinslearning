@@ -31,7 +31,7 @@ pipeline {
                     if (params.RUN_TESTS) {
                         echo "Running tests..."
                     } else {
-                        echo "Skipping tests..."
+                        echo "Skipping tests"
                     }
                 }
             }
