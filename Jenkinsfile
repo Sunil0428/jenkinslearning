@@ -19,4 +19,13 @@ pipeline {
             }
         }
     }
+    post{
+        always{
+            echo 'this section always runs'
+            deleteDir()
+        }
+        success{
+            echo 'this section runs when the pipeline is success'
+        }
+    }
 }
