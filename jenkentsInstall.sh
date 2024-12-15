@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 #check whether root user or not
 R="\e[31m"
