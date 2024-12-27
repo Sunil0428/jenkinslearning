@@ -11,7 +11,7 @@ pipeline{
         choice(name: 'CHOICE', choices: ['Apply', 'Destroy'], description: 'Choose terraform action')
     }
     stages{
-        stage("Terraform init & apply"){
+        stage('Terraform init & apply'){
             when{
                  expression { params.CHOICE == 'Apply' }
                 }
@@ -27,7 +27,7 @@ pipeline{
             }
         }
         
-        stage("Terraform destroy"){
+        stage('Terraform destroy'){
             when{
                 expression { params.CHOICE == 'Destroy' }
                 }
