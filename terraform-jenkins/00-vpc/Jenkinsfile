@@ -1,0 +1,37 @@
+pipeline{
+    agent{
+        label: Agent-1
+    }
+    parameters{
+        choice(name: 'CHOICE', choices: ['Apply', 'Destroy'], description: 'Choose terraform action')
+    }
+    stages{
+        when{
+            ${CHOICE}=='Apply'
+        }
+        stage("Terraform init & apply"){
+            steps{
+            withAWS(region: 'us-east-1', credentials: 'aws-creds')){
+                sh '''
+                    cd terraform-jenkins/00-vpc
+                    terraform init -reconfigure
+                    terraform plan  -out=tfplan
+                '''
+            }
+
+        }
+        when{
+            ${CHOICE}=='Destroy'
+        }
+        stage("Terraform destroy"){
+            steps{
+                 withAWS(region: 'us-east-1', credentials: 'aws-creds')){
+                sh '''
+                    cd terraform-jenkins/00-vpc
+                    terraform destroy -auto-approve
+                '''
+            }
+
+        }
+    }
+}
