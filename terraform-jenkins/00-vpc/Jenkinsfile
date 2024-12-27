@@ -12,7 +12,7 @@ pipeline{
     }
     stages{
         when{
-           expression { params.CHOICE == 'apply' }
+           expression { params.CHOICE == 'Apply' }
         }
         stage("Terraform init & apply"){
             steps{
@@ -30,7 +30,7 @@ pipeline{
         }
         stage("Terraform destroy"){
             steps{
-                 withAWS(region: 'us-east-1', credentials: 'aws-creds')){
+                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
                 sh '''
                     cd terraform-jenkins/00-vpc
                     terraform destroy -auto-approve
