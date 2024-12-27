@@ -2,12 +2,17 @@ pipeline{
     agent{
         label: Agent-1
     }
+    options{
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+    }
     parameters{
         choice(name: 'CHOICE', choices: ['Apply', 'Destroy'], description: 'Choose terraform action')
     }
     stages{
         when{
-            ${CHOICE}=='Apply'
+           expression { params.CHOICE == 'apply' }
         }
         stage("Terraform init & apply"){
             steps{
@@ -20,8 +25,8 @@ pipeline{
             }
 
         }
-        when{
-            ${CHOICE}=='Destroy'
+         when{
+           expression { params.CHOICE == 'Destroy' }
         }
         stage("Terraform destroy"){
             steps{
