@@ -11,32 +11,36 @@ pipeline{
         choice(name: 'CHOICE', choices: ['Apply', 'Destroy'], description: 'Choose terraform action')
     }
     stages{
-        when{
-           expression { params.CHOICE == 'Apply' }
-        }
         stage("Terraform init & apply"){
+            when{
+                 expression { params.CHOICE == 'Apply' }
+                }
             steps{
-            withAWS(region: 'us-east-1', credentials: 'aws-creds'){
-                sh '''
-                    cd terraform-jenkins/00-vpc
-                    terraform init -reconfigure
-                    terraform plan  -out=tfplan
-                '''
-            }
+                   withAWS(region: 'us-east-1', credentials: 'aws-creds'){
+                    sh '''
+                        cd terraform-jenkins/00-vpc
+                        terraform init -reconfigure
+                        terraform plan  -out=tfplan
+                    '''
+                   }
 
+            }
         }
-         when{
-           expression { params.CHOICE == 'Destroy' }
-        }
+        
         stage("Terraform destroy"){
+            when{
+                expression { params.CHOICE == 'Destroy' }
+                }
             steps{
                  withAWS(region: 'us-east-1', credentials: 'aws-creds'){
                 sh '''
                     cd terraform-jenkins/00-vpc
                     terraform destroy -auto-approve
                 '''
+                }
             }
-
         }
+
     }
+        
 }
