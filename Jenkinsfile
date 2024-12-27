@@ -1,6 +1,6 @@
 pipeline {
     agent{
-        label 'AGENT-1'
+        label 'Agent-1'
     }
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
