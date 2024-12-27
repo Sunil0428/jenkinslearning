@@ -7,10 +7,16 @@ pipeline {
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests during the build?')
         choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Choose the environment to deploy')
     }
+
+    options{
+        timeout(time:10, unit: 'SECONDS')
+    }
+
     stages {
         stage('Build') {
             steps {
                 echo 'Building...'
+                sh 'sleep 10'
             }
         }
         stage('Test') {
