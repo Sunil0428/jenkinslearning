@@ -12,9 +12,6 @@ pipeline{
     }
     stages{
         stage('Terraform init & apply'){
-            when{
-                 expression { params.CHOICE == 'Apply' }
-                }
             steps{
                    withAWS(region: 'us-east-1', credentials: 'aws-creds'){
                     sh """
