@@ -20,8 +20,8 @@ pipeline{
                    
                     sh """
                         cd terraform-jenkins/00-vpc
-                        terraform init 
-                        terraform plan -out=tfplan
+                        // terraform init -reconfigure
+                        // terraform plan -out=tfplan
                         terraform destroy -auto-approve 
                     """
                    }
