@@ -13,7 +13,7 @@ pipeline{
     stages{
         stage('Terraform init & apply'){
             when {
-                expression { params.ACTION == 'Apply' }
+                expression { params.CHOICE == 'Apply' }
             }
             steps{
                 withAWS(region:'us-east-1', credentials: 'terraform-creds') {
@@ -32,7 +32,7 @@ pipeline{
         }
         stage('Terraform destroy'){
             when {
-                expression { params.ACTION == 'Destroy' }
+                expression { params.CHOICE == 'Destroy' }
             }
             steps{
                 
