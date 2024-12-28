@@ -12,13 +12,17 @@ pipeline{
     }
     stages{
         stage('Terraform init & apply'){
-
+            when {
+                expression { params.ACTION == 'Apply' }
+            }
             steps{
                 withAWS(region:'us-east-1', credentials: 'terraform-creds') {
                    
                     sh """
                         cd terraform-jenkins/00-vpc
-                        echo 'Hi helloo'
+                        terraform init -reconfigure
+                        terraform plan -out=tfplan
+                        terraform apply -auto-approve
                     """
                    }
 
@@ -27,12 +31,14 @@ pipeline{
         }
         }
         stage('Terraform destroy'){
-            
+            when {
+                expression { params.ACTION == 'Destroy' }
+            }
             steps{
                 
                 sh """
                     cd terraform-jenkins/00-vpc
-                    echo 'Hi helloo from stage destroy'
+                    terraform destroy -auto-approve
                 """
                 }
             }
