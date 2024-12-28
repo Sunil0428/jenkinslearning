@@ -38,6 +38,7 @@ pipeline{
                 withAWS(region:'us-east-1', credentials: 'terraform-creds') {
                 sh """
                     cd terraform-jenkins/00-vpc
+                    terraform init -reconfigure
                     terraform destroy -auto-approve
                 """
                 }
